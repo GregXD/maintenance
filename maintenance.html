@@ -3,38 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maintenance Mode - Rock, Paper, Scissors</title>
+    <title>Maintenance Mode - NER Challenge</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #FFFFFF; /* backgroundColor */
-            font-family: Arial, sans-serif;
+            color: #262730; /* textColor */
+            font-family: 'Press Start 2P', cursive; /* Pixelated font */
         }
         .container {
             text-align: center;
-            background: white;
+            background: #F0F2F6; /* secondaryBackgroundColor */
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border: 3px solid #262730; /* textColor */
         }
         .btn-custom {
             background-color: #7a9ae5; /* primaryColor */
             color: white;
             margin: 5px;
+            border: 2px solid #262730; /* textColor */
+            transition: transform 0.2s;
+        }
+        .btn-custom:hover {
+            transform: scale(1.1);
         }
         .message {
             margin-top: 20px;
             font-size: 18px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
         }
         .maintenance-message {
             margin-bottom: 20px;
             font-size: 20px;
-            color: #ff0000;
+            color: #ff0000; /* Red text */
+        }
+        .highlight {
+            background-color: #FFFF00; /* Yellow highlight */
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            75% {
+                transform: translateX(5px);
+            }
+        }
+        .shake {
+            animation: shake 0.5s;
         }
     </style>
 </head>
@@ -42,33 +75,40 @@
     <div class="container">
         <h1 class="text-primary">System Maintenance</h1>
         <p class="maintenance-message">Our system is currently down for maintenance. We'll be back soon!</p>
-        <h2 class="text-secondary">Rock, Paper, Scissors</h2>
-        <p>Choose your move:</p>
-        <button class="btn btn-custom" onclick="playGame('rock')">Rock</button>
-        <button class="btn btn-custom" onclick="playGame('paper')">Paper</button>
-        <button class="btn btn-custom" onclick="playGame('scissors')">Scissors</button>
+        <h2 class="text-secondary">NER Challenge</h2>
+        <p id="sentence"><strong>Sentence:</strong> Barack Obama was born in Hawaii.</p>
+        <p>Identify the named entity type for the highlighted word:</p>
+        <button class="btn btn-custom" onclick="tagNER('person')">Person</button>
+        <button class="btn btn-custom" onclick="tagNER('organization')">Organization</button>
+        <button class="btn btn-custom" onclick="tagNER('location')">Location</button>
+        <button class="btn btn-custom" onclick="tagNER('date')">Date</button>
         <div class="message" id="message"></div>
     </div>
 
     <script>
-        function playGame(userChoice) {
-            const choices = ['rock', 'paper', 'scissors'];
-            const computerChoice = choices[Math.floor(Math.random() * 3)];
+        const sentences = [
+            { text: 'Barack <span class="highlight">Obama</span> was born in Hawaii.', word: 'Obama', ner: 'person' },
+            { text: 'Google is a leading <span class="highlight">company</span> in the tech industry.', word: 'company', ner: 'organization' },
+            { text: 'The Eiffel Tower is located in <span class="highlight">Paris</span>.', word: 'Paris', ner: 'location' },
+            { text: 'The meeting is scheduled for <span class="highlight">Monday</span>.', word: 'Monday', ner: 'date' },
+            { text: 'Amazon is headquartered in <span class="highlight">Seattle</span>.', word: 'Seattle', ner: 'location' },
+            { text: 'Elon <span class="highlight">Musk</span> founded SpaceX.', word: 'Musk', ner: 'person' }
+        ];
+
+        const randomSentence = sentences[Math.floor(Math.random() * sentences.length)];
+        document.getElementById('sentence').innerHTML = `<strong>Sentence:</strong> ${randomSentence.text}`;
+
+        function tagNER(userNER) {
             const message = document.getElementById('message');
 
-            if (userChoice === computerChoice) {
-                message.textContent = `It's a tie! You both chose ${userChoice}.`;
-                message.style.color = 'blue';
-            } else if (
-                (userChoice === 'rock' && computerChoice === 'scissors') ||
-                (userChoice === 'paper' && computerChoice === 'rock') ||
-                (userChoice === 'scissors' && computerChoice === 'paper')
-            ) {
-                message.textContent = `You win! ${userChoice} beats ${computerChoice}.`;
+            if (userNER === randomSentence.ner) {
+                message.textContent = 'Correct! You identified the named entity type correctly.';
                 message.style.color = 'green';
+                message.classList.remove('shake');
             } else {
-                message.textContent = `You lose! ${computerChoice} beats ${userChoice}.`;
+                message.textContent = 'Incorrect. Try again!';
                 message.style.color = 'red';
+                message.classList.add('shake');
             }
         }
     </script>
