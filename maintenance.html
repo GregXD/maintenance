@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Mode - Rock, Paper, Scissors</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .maintenance-message {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>System Maintenance</h1>
+        <p class="maintenance-message">Our system is currently down for maintenance. We'll be back soon!</p>
+        <h2>Rock, Paper, Scissors</h2>
+        <p>Choose your move:</p>
+        <button onclick="playGame('rock')">Rock</button>
+        <button onclick="playGame('paper')">Paper</button>
+        <button onclick="playGame('scissors')">Scissors</button>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        function playGame(userChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            const message = document.getElementById('message');
+
+            if (userChoice === computerChoice) {
+                message.textContent = `It's a tie! You both chose ${userChoice}.`;
+                message.style.color = 'blue';
+            } else if (
+                (userChoice === 'rock' && computerChoice === 'scissors') ||
+                (userChoice === 'paper' && computerChoice === 'rock') ||
+                (userChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                message.textContent = `You win! ${userChoice} beats ${computerChoice}.`;
+                message.style.color = 'green';
+            } else {
+                message.textContent = `You lose! ${computerChoice} beats ${userChoice}.`;
+                message.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>
