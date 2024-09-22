@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maintenance Mode - NER Challenge</title>
+    <title>NER Challenge - Maintenance Mode</title>
+    <meta name="description" content="NER Challenge game during system maintenance. Identify the named entity type for the highlighted word.">
+    <meta name="keywords" content="NER, Named Entity Recognition, AI, NLP, Game, Maintenance">
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
         body {
             display: flex;
             justify-content: center;
@@ -16,25 +16,39 @@
             height: 100vh;
             background-color: #FFFFFF; /* backgroundColor */
             color: #262730; /* textColor */
-            font-family: 'Press Start 2P', cursive; /* Pixelated font */
+            font-family: 'Arial', sans-serif; /* Sans-serif font */
+            padding: 10px; /* Add padding for mobile */
+            position: relative; /* For particle background */
+            overflow: hidden; /* Hide overflow for particles */
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Behind the content */
         }
         .container {
             text-align: center;
             background: #F0F2F6; /* secondaryBackgroundColor */
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            border: 3px solid #262730; /* textColor */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #E0E0E0; /* Light border */
+            max-width: 600px; /* Limit container width */
+            width: 100%; /* Full width on mobile */
         }
         .btn-custom {
             background-color: #7a9ae5; /* primaryColor */
             color: white;
             margin: 5px;
-            border: 2px solid #262730; /* textColor */
+            border: none; /* Remove border */
             transition: transform 0.2s;
+            width: 100%; /* Full width buttons on mobile */
         }
         .btn-custom:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         .message {
             margin-top: 20px;
@@ -72,16 +86,19 @@
     </style>
 </head>
 <body>
+    <div id="particles-js"></div>
     <div class="container">
-        <h1 class="text-primary">System Maintenance</h1>
-        <p class="maintenance-message">Our system is currently down for maintenance. We'll be back soon!</p>
-        <h2 class="text-secondary">NER Challenge</h2>
+        <h1 class="text-primary" style="color: #7a9ae5;">System Maintenance</h1>
+        <p class="maintenance-message" style="color: #262730;">Our system is currently down for maintenance. We'll be back soon!</p>
+        <h2 class="text-secondary" style="color: #262730;">NER Challenge</h2>
         <p id="sentence"><strong>Sentence:</strong> Barack Obama was born in Hawaii.</p>
         <p>Identify the named entity type for the highlighted word:</p>
-        <button class="btn btn-custom" onclick="tagNER('person')">Person</button>
-        <button class="btn btn-custom" onclick="tagNER('organization')">Organization</button>
-        <button class="btn btn-custom" onclick="tagNER('location')">Location</button>
-        <button class="btn btn-custom" onclick="tagNER('date')">Date</button>
+        <div class="d-flex flex-column">
+            <button class="btn btn-custom" onclick="tagNER('person')">Person</button>
+            <button class="btn btn-custom" onclick="tagNER('organization')">Organization</button>
+            <button class="btn btn-custom" onclick="tagNER('location')">Location</button>
+            <button class="btn btn-custom" onclick="tagNER('date')">Date</button>
+        </div>
         <div class="message" id="message"></div>
     </div>
 
@@ -95,22 +112,139 @@
             { text: 'Elon <span class="highlight">Musk</span> founded SpaceX.', word: 'Musk', ner: 'person' }
         ];
 
-        const randomSentence = sentences[Math.floor(Math.random() * sentences.length)];
-        document.getElementById('sentence').innerHTML = `<strong>Sentence:</strong> ${randomSentence.text}`;
+        let currentSentenceIndex = 0;
+
+        function displaySentence() {
+            const sentence = sentences[currentSentenceIndex];
+            document.getElementById('sentence').innerHTML = `<strong>Sentence:</strong> ${sentence.text}`;
+            document.getElementById('message').textContent = '';
+        }
 
         function tagNER(userNER) {
             const message = document.getElementById('message');
+            const sentence = sentences[currentSentenceIndex];
 
-            if (userNER === randomSentence.ner) {
+            if (userNER === sentence.ner) {
                 message.textContent = 'Correct! You identified the named entity type correctly.';
                 message.style.color = 'green';
                 message.classList.remove('shake');
+                currentSentenceIndex = (currentSentenceIndex + 1) % sentences.length;
+                setTimeout(displaySentence, 1000); // Move to the next sentence after 1 second
             } else {
                 message.textContent = 'Incorrect. Try again!';
                 message.style.color = 'red';
                 message.classList.add('shake');
             }
         }
+
+        // Display the first sentence on page load
+        displaySentence();
+    </script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#7a9ae5' /* primaryColor */
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    },
+                    polygon: {
+                        nb_sides: 5
+                    },
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    anim: {
+                        enable: false,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#7a9ae5', /* primaryColor */
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: false,
+                        mode: 'repulse'
+                    },
+                    onclick: {
+                        enable: false,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 400,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    bubble: {
+                        distance: 400,
+                        size: 40,
+                        duration: 2,
+                        opacity: 8,
+                        speed: 3
+                    },
+                    repulse: {
+                        distance: 200
+                    },
+                    push: {
+                        particles_nb: 4
+                    },
+                    remove: {
+                        particles_nb: 2
+                    }
+                }
+            },
+            retina_detect: true
+        });
     </script>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
