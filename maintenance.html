@@ -31,11 +31,11 @@
         }
         .container {
             text-align: center;
-            background: #F0F2F6; /* secondaryBackgroundColor */
+            background: rgba(240, 242, 246, 0.8); /* secondaryBackgroundColor with more transparency */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            border: 1px solid #E0E0E0; /* Light border */
+            border: 1px solid rgba(224, 224, 224, 0.8); /* Light border with transparency */
             max-width: 600px; /* Limit container width */
             width: 100%; /* Full width on mobile */
         }
@@ -59,7 +59,7 @@
         .maintenance-message {
             margin-bottom: 20px;
             font-size: 20px;
-            color: #ff0000; /* Red text */
+            color: #262730; /* textColor */
         }
         .highlight {
             background-color: #FFFF00; /* Yellow highlight */
@@ -89,7 +89,7 @@
     <div id="particles-js"></div>
     <div class="container">
         <h1 class="text-primary" style="color: #7a9ae5;">System Maintenance</h1>
-        <p class="maintenance-message" style="color: #262730;">Our system is currently down for maintenance. We'll be back soon!</p>
+        <p class="maintenance-message">Our system is currently down for maintenance. We'll be back soon!</p>
         <h2 class="text-secondary" style="color: #262730;">NER Challenge</h2>
         <p id="sentence"><strong>Sentence:</strong> Barack Obama was born in Hawaii.</p>
         <p>Identify the named entity type for the highlighted word:</p>
