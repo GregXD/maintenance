@@ -14,8 +14,8 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #FFFFFF; /* backgroundColor */
-            color: #262730; /* textColor */
+            background-color: #FFFFFF; /* Light background */
+            color: #172036; /* Darker text color */
             font-family: 'Arial', sans-serif; /* Sans-serif font */
             padding: 10px; /* Add padding for mobile */
             position: relative; /* For particle background */
@@ -31,7 +31,7 @@
         }
         .container {
             text-align: center;
-            background: rgba(240, 242, 246, 0.8); /* secondaryBackgroundColor with more transparency */
+            background: rgba(240, 242, 246, 0.9); /* Light container background with transparency */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -39,107 +39,29 @@
             max-width: 600px; /* Limit container width */
             width: 100%; /* Full width on mobile */
         }
-        .btn-custom {
-            background-color: #7a9ae5; /* primaryColor */
-            color: white;
-            margin: 5px;
-            border: none; /* Remove border */
-            transition: transform 0.2s;
-            width: 100%; /* Full width buttons on mobile */
-        }
-        .btn-custom:hover {
-            transform: scale(1.05);
-        }
-        .message {
-            margin-top: 20px;
-            font-size: 18px;
-            opacity: 0;
-            animation: fadeIn 1s forwards;
-        }
         .maintenance-message {
             margin-bottom: 20px;
             font-size: 20px;
-            color: #262730; /* textColor */
+            color: #172036; /* Darker text color */
         }
-        .highlight {
-            background-color: #FFFF00; /* Yellow highlight */
+        .logo {
+            max-width: 150px; /* Smaller logo size */
+            height: auto;
+            margin-bottom: 20px;
         }
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-        @keyframes shake {
-            0%, 100% {
-                transform: translateX(0);
-            }
-            25% {
-                transform: translateX(-5px);
-            }
-            75% {
-                transform: translateX(5px);
-            }
-        }
-        .shake {
-            animation: shake 0.5s;
+        h1 {
+            color: #7A9AE5; /* Main color for H1 */
         }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
     <div class="container">
-        <h1 class="text-primary" style="color: #7a9ae5;">System Maintenance</h1>
-        <p class="maintenance-message">Our system is currently down for maintenance. We'll be back soon!</p>
-        <h2 class="text-secondary" style="color: #262730;">NER Challenge</h2>
-        <p id="sentence"><strong>Sentence:</strong> Barack Obama was born in Hawaii.</p>
-        <p>Identify the named entity type for the highlighted word:</p>
-        <div class="d-flex flex-column">
-            <button class="btn btn-custom" onclick="tagNER('person')">Person</button>
-            <button class="btn btn-custom" onclick="tagNER('organization')">Organization</button>
-            <button class="btn btn-custom" onclick="tagNER('location')">Location</button>
-            <button class="btn btn-custom" onclick="tagNER('date')">Date</button>
-        </div>
-        <div class="message" id="message"></div>
+        <img src="https://github.com/GregXD/public/blob/main/xd_logo_dark.png?raw=true" alt="Logo" class="logo">
+        <h1>System Maintenance</h1>
+        <p class="maintenance-message">Our system is currently down for maintenance. We'll be back soon.!</p>
     </div>
 
-    <script>
-        const sentences = [
-            { text: 'Barack <span class="highlight">Obama</span> was born in Hawaii.', word: 'Obama', ner: 'person' },
-            { text: 'Google is a leading <span class="highlight">company</span> in the tech industry.', word: 'company', ner: 'organization' },
-            { text: 'The Eiffel Tower is located in <span class="highlight">Paris</span>.', word: 'Paris', ner: 'location' },
-            { text: 'The meeting is scheduled for <span class="highlight">Monday</span>.', word: 'Monday', ner: 'date' },
-            { text: 'Amazon is headquartered in <span class="highlight">Seattle</span>.', word: 'Seattle', ner: 'location' },
-            { text: 'Elon <span class="highlight">Musk</span> founded SpaceX.', word: 'Musk', ner: 'person' }
-        ];
-
-        let currentSentenceIndex = 0;
-
-        function displaySentence() {
-            const sentence = sentences[currentSentenceIndex];
-            document.getElementById('sentence').innerHTML = `<strong>Sentence:</strong> ${sentence.text}`;
-            document.getElementById('message').textContent = '';
-        }
-
-        function tagNER(userNER) {
-            const message = document.getElementById('message');
-            const sentence = sentences[currentSentenceIndex];
-
-            if (userNER === sentence.ner) {
-                message.textContent = 'Correct! You identified the named entity type correctly.';
-                message.style.color = 'green';
-                message.classList.remove('shake');
-                currentSentenceIndex = (currentSentenceIndex + 1) % sentences.length;
-                setTimeout(displaySentence, 1000); // Move to the next sentence after 1 second
-            } else {
-                message.textContent = 'Incorrect. Try again!';
-                message.style.color = 'red';
-                message.classList.add('shake');
-            }
-        }
-
-        // Display the first sentence on page load
-        displaySentence();
-    </script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         particlesJS('particles-js', {
@@ -152,7 +74,7 @@
                     }
                 },
                 color: {
-                    value: '#7a9ae5' /* primaryColor */
+                    value: '#7A9AE5' /* primaryColor */
                 },
                 shape: {
                     type: 'circle',
@@ -187,7 +109,7 @@
                 line_linked: {
                     enable: true,
                     distance: 150,
-                    color: '#7a9ae5', /* primaryColor */
+                    color: '#7A9AE5', /* primaryColor */
                     opacity: 0.4,
                     width: 1
                 },
